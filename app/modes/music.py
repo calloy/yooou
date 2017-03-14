@@ -144,6 +144,7 @@ class Music(object):
         self._stateInfo['state'] = 'stop'
         self._stateInfo['play'] = 'stop'
         self._musicInfo['title'] = '---'
+        self._musicInfo['artist'] = '---'
         return True
 
 
@@ -158,6 +159,8 @@ class Music(object):
         self.channel = channel
         time.sleep(4)
         self._stateInfo['play'] = 'stop'
+        self._musicInfo['title'] = '---'
+        self._musicInfo['artist'] = '---'
         if self._stateInfo['state'] == 'stop':
             top = threading.Thread(target=self._player)
             self._threds.append(top)
