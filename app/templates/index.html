@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>树莓派音乐播放器v{{version}}</title>
+        <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/materialize/0.98.0/css/materialize.css"/>
+    </head>
+    <body>
+        <nav>
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">树莓派音乐播放器</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li>v1.0.0.0.20170217</li>
+                        <li><a href="#!">关于</a></li>
+                    </ul>
+                </div>
+            </div>
+          </nav>
+        <div class="container">
+            
+            <div style="height: 50px;"></div>
+            <div class="main">
+                    
+
+                <div class="row">
+                    <a class="btn waves-effect waves-light col l3" id="player"><i class="mdi-file-cloud left"></i>播放</a>
+                    <div class="col l1">
+                        
+                    </div>
+                    <a class="btn waves-effect waves-light col l3" id="next"><i class="mdi-file-cloud left"></i>下一曲</a>
+                    <div class="col l1">
+                        
+                    </div>
+                    <a class="btn waves-effect waves-light col l3" id="stop"><i class="mdi-file-cloud left"></i>结束</a>
+                </div>
+
+            </div>
+            <div style="height: 50px;">
+                <div class="info">
+                    当前正在播放音乐：<span id="music_title"></span><span style="display:inline-block;width: 40px;"> </span>
+                    演唱：<span id="geshou"></span>
+                </div>
+            </div>
+            <style type="text/css">
+                .fm-channels{
+                    margin: 0 auto;
+                    width: 860px;
+                }
+                .fm-channels dl {
+                    float: left;
+                    margin-right: 30px;
+                }
+                .fm-channels dl dt{
+                    color: #ddd;
+                    height: 42px;
+                    line-height: 42px;
+                    text-align: center;
+                }
+                .fm-channels dl dd{
+                    margin: 0px;
+                    background: rgba(255, 23, 68, 0.55) none repeat scroll 0 0;
+                    border-radius: 4px;
+                    color: #fff;
+                    cursor: pointer;
+                    font-size: 16px;
+                    height: 42px;
+                    line-height: 42px;
+                    margin-bottom: 18px;
+                    position: relative;
+                    text-align: center;
+                    width: 140px;
+                }
+                .fm-channels dl dd.active{
+                    background: rgba(255, 23, 68, 0.85)
+                }
+                .fm-channels dl dd span{
+                    position: absolute;
+                    left: 18px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 14px;
+                    height: 11px;
+                    display: inline-block;
+                    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAIklEQVQokWNgGFDwHwoGRiNJhgwejVgNIUYxVTTC2XTXCACEtO8RtpwxdgAAAABJRU5ErkJggg==) no-repeat;
+                }
+            </style>
+            <div class="fm-channels teal lighten-3" id="channel">
+                    <dl class="dl-0">
+                        <dt>午后休闲</dt>
+                        <dd class="channel-dd" data-channels="public_tuijian_spring">漫步春天</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_autumn">秋日私语</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_winter">温暖冬日</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_rege">热歌</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_ktv">KTV金曲</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_billboard">Billboard</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_chengmingqu">成名曲</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_wangluo">网络歌曲</dd>
+                    </dl>
+                    <dl class="dl-1">
+                        <dt>恰意时光</dt>
+                        <dd class="channel-dd" data-channels="public_tuijian_kaiche">开车</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_yingshi">影视</dd>
+                        <dd class="channel-dd" data-channels="public_tuijian_suibiantingting">随便听听</dd>
+                        <dd class="channel-dd active" data-channels="public_shiguang_jingdianlaoge">经典老歌<span></span></dd>
+                        <dd class="channel-dd" data-channels="public_shiguang_70hou">70后</dd>
+                        <dd class="channel-dd" data-channels="public_shiguang_80hou">80后</dd>
+                        <dd class="channel-dd" data-channels="public_shiguang_90hou">90后</dd>
+                        <dd class="channel-dd" data-channels="public_shiguang_xinge">火爆新歌</dd>
+                    </dl>
+                    <dl class="dl-2">
+                        <dt>下雨天</dt>
+                        <dd class="channel-dd" data-channels="public_shiguang_erge">儿歌</dd>
+                        <dd class="channel-dd" data-channels="public_shiguang_lvxing">旅行</dd>
+                        <dd class="channel-dd" data-channels="public_shiguang_yedian">夜店</dd>
+                        <dd class="channel-dd" data-channels="public_fengge_liuxing">流行</dd>
+                        <dd class="channel-dd" data-channels="public_fengge_yaogun">摇滚</dd>
+                        <dd class="channel-dd" data-channels="public_fengge_minyao">民谣</dd>
+                        <dd class="channel-dd" data-channels="public_fengge_qingyinyue">轻音乐</dd>
+                        <dd class="channel-dd" data-channels="public_fengge_xiaoqingxin">小清新</dd>
+                    </dl>
+                    <dl class="dl-3">
+                        <dt>回忆往事</dt>
+                        <dd class="channel-dd" data-channels="public_fengge_zhongguofeng">中国风</dd>
+                        <dd class="channel-dd" data-channels="public_fengge_dj">DJ舞曲</dd>
+                        <dd class="channel-dd" data-channels="public_fengge_dianyingyuansheng">电影</dd>
+                        <dd class="channel-dd" data-channels="public_xinqing_qingsongjiari">轻松假日</dd>
+                        <dd class="channel-dd" data-channels="public_xinqing_huankuai">欢快旋律</dd>
+                        <dd class="channel-dd" data-channels="public_xinqing_tianmi">甜蜜感受</dd>
+                        <dd class="channel-dd" data-channels="public_xinqing_jimo">寂寞</dd>
+                        <dd class="channel-dd" data-channels="public_xinqing_qingge">单身情歌</dd>
+                    </dl>
+                    <dl class="dl-4">
+                        <dt>偶像歌曲</dt>
+                        <dd class="channel-dd" data-channels="public_xinqing_shuhuan">舒缓节奏</dd>
+                        <dd class="channel-dd" data-channels="public_xinqing_yonglanwuhou">慵懒午后</dd>
+                        <dd class="channel-dd" data-channels="public_xinqing_shanggan">伤感</dd>
+                        <dd class="channel-dd" data-channels="public_yuzhong_huayu">华语</dd>
+                        <dd class="channel-dd" data-channels="public_yuzhong_oumei">欧美</dd>
+                        <dd class="channel-dd" data-channels="public_yuzhong_riyu">日语</dd>
+                        <dd class="channel-dd" data-channels="public_yuzhong_hanyu">韩语</dd>
+                        <dd class="channel-dd" data-channels="public_yuzhong_yueyu">粤语</dd>
+                    </dl>
+            </div>
+
+            <div class="footer" style="clear: both;">
+                <div class="center">
+                    Copyright <a href="http://yooou.cn" target="_blank">Yooou.cn</a> by calloy
+                </div>
+            </div>
+        </div>
+        <script src="//cdn.bootcss.com/materialize/0.98.0/js/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+        <script type="text/javascript">
+            var settime;
+            $(document).ready(function(){
+                var settime = setInterval(get_music_info,5000);
+                });
+               
+           
+            
+            function get_music_info(){
+                $.ajax({
+                   url:'/music/music_info',
+                    datatype:'json',
+                    type:'get',
+                    success:function (data) {
+                        json = eval('(' + data + ')');
+                        $("#music_title").text(json['title']);
+                        $("#geshou").text(json['artist']);
+                        $(".channel-dd").removeClass('active').find("span").remove();
+                        $("dd[data-channels="+json['channel']+"]").addClass('active').append("<span>");
+
+                    },
+                    error: function() {
+
+
+                    }
+                });
+            }
+            $("#player").click(function() {
+//                $.get('http://192.168.31.111:5000/music/player');
+                $.get('/music/player');
+                
+            });
+            $("#stop").click(function() {
+                $.get('/music/stop');
+                // clearInterval(settime);
+            });
+            $("#next").click(function() {
+                $.get('/music/next');
+            });
+            $('dd').click(function(e){
+                var channels = $(this).attr("data-channels"),
+                    text = $(this).text();
+                $.get('/music/change/'+channels);
+                $(".channel-dd").removeClass('active').find("span").remove();
+                $(this).addClass('active').append("<span>");
+//                      _this.$channel_title.text(text).attr({ "data-channels": channels });
+//                      _this.getSong($(this).attr("data-channels"));
+//                      //存储频道信息
+//                      _this.sendChannel("channel_text", text);
+//                      _this.sendChannel("channel_id", channels);
+                
+                
+            })
+        </script>
+    </body>
+</html>
